@@ -3,10 +3,6 @@ package org.taller;
 public class PilaDeEstados {
     private NodoEstado tope;
 
-    public PilaDeEstados() {
-        this.tope = null;
-    }
-
     // añade un nuevo estado arriba de todos los demas estados
     public void pushEstado(String estado) {
         NodoEstado nuevo = new NodoEstado(estado);
