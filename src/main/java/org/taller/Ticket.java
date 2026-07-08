@@ -60,4 +60,8 @@ public class Ticket {
     public PilaDeEstados getHistorial() {
         return historial;
     }
+
+    public void setPrioridad(EnumPrioridad prioridad) {
+        this.prioridad = prioridad;
+    }
 }

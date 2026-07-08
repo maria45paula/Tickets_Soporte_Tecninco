@@ -45,5 +45,13 @@ public class PilaDeEstados {
         return tope != null && tope.getSiguiente() == null;
     }
 
-
+    public String listarComoTexto() {
+        NodoEstado actual = tope;
+        StringBuilder sb = new StringBuilder();
+        while (actual != null) {
+            sb.append("- ").append(actual.getEstado()).append("\n");
+            actual = actual.getSiguiente();
+        }
+        return sb.toString();
+    }
 }

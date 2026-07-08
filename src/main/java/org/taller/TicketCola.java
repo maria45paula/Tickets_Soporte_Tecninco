@@ -59,4 +59,20 @@ public class TicketCola {
             actual = actual.getSiguiente();
         }
     }
+
+    public String listarComoTexto() {
+        if (estaVacia()) return "No hay tickets pendientes por atender.";
+
+        StringBuilder sb = new StringBuilder();
+        NodoTicket actual = frente;
+        while (actual != null) {
+            Ticket t = actual.getTicket();
+            sb.append("Nro: ").append(t.getNroTicket())
+                    .append("  ").append(t.getNombreCliente())
+                    .append("  ").append(t.getDescripcion())
+                    .append("\n");
+            actual = actual.getSiguiente();
+        }
+        return sb.toString();
+    }
 }

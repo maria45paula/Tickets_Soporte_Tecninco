@@ -93,4 +93,33 @@ public class ListaDoblementeEnlazadaTicket {
         }
     }
 
+    public String listarInicioAFinComoTexto() {
+        if (estaVacia()) return "No hay tickets en atención.";
+        StringBuilder sb = new StringBuilder();
+        NodoDoble actual = inicio;
+        while (actual != null) {
+            Ticket t = actual.getTicket();
+            sb.append("Nro: ").append(t.getNroTicket())
+                    .append("  ").append(t.getNombreCliente())
+                    .append("  ").append(t.getEstadoActual())
+                    .append("\n");
+            actual = actual.getSiguiente();
+        }
+        return sb.toString();
+    }
+
+    public String listarFinAInicioComoTexto() {
+        if (estaVacia()) return "No hay tickets en atención.";
+        StringBuilder sb = new StringBuilder();
+        NodoDoble actual = fin;
+        while (actual != null) {
+            Ticket t = actual.getTicket();
+            sb.append("Nro: ").append(t.getNroTicket())
+                    .append("  ").append(t.getNombreCliente())
+                    .append("  ").append(t.getEstadoActual())
+                    .append("\n");
+            actual = actual.getAnterior();
+        }
+        return sb.toString();
+    }
 }
