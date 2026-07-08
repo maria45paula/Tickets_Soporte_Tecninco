@@ -64,7 +64,7 @@ public class ListaDoblementeEnlazadaTicket {
     public int getTamanio() {
         return tamanio;
     }
-
+/*
     public void verDeInicioAFin() {
         if (estaVacia()) {
             System.out.println("No hay tickets en atencion");
@@ -91,7 +91,7 @@ public class ListaDoblementeEnlazadaTicket {
             System.out.println("Numero:" + ticket.getNroTicket() + "  " + ticket.getNombreCliente() + "  " + ticket.getEstadoActual());
             actual = actual.getAnterior();
         }
-    }
+    }*/
 
     public String listarInicioAFinComoTexto() {
         if (estaVacia()) return "No hay tickets en atención.";

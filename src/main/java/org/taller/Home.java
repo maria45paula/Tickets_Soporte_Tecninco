@@ -53,7 +53,6 @@ public class Home {
         salirButton.addActionListener(e -> System.exit(0));
     }
 
-    // ---------- 1. Registrar ticket ----------
     private void registrarTicket() {
         String cliente = JOptionPane.showInputDialog(panelPrincipal, "Nombre del cliente:");
         if (cliente == null || cliente.isBlank()) return;
@@ -74,7 +73,6 @@ public class Home {
                 "Ticket #" + nuevo.getNroTicket() + " registrado correctamente.");
     }
 
-    // ---------- 2. Iniciar atención del siguiente ----------
     private void iniciarAtencionSiguiente() {
         Ticket ticket = pendientes.desencolar();
 
@@ -90,7 +88,6 @@ public class Home {
                 "Ahora se está atendiendo el ticket #" + ticket.getNroTicket());
     }
 
-    // ---------- 3. Mostrar tickets pendientes ----------
     private void mostrarPendientes() {
         // TicketCola.verPendientes() usa System.out.println, no sirve en GUI.
         // Ver la sección de abajo: te recomiendo agregar un método que devuelva String.
@@ -98,7 +95,6 @@ public class Home {
         mostrarEnVentana(texto, "Tickets pendientes");
     }
 
-    // ---------- 4. Buscar ticket en atención ----------
     private void buscarTicket() {
         int numero = pedirNumeroTicket();
         if (numero == -1) return;
@@ -117,7 +113,6 @@ public class Home {
         JOptionPane.showMessageDialog(panelPrincipal, info, "Ticket #" + numero, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ---------- 5. Cambiar prioridad ----------
     private void cambiarPrioridad() {
         int numero = pedirNumeroTicket();
         if (numero == -1) return;
@@ -140,28 +135,28 @@ public class Home {
         JOptionPane.showMessageDialog(panelPrincipal, "Prioridad actualizada.");
     }
 
-    // ---------- 6. Cambiar estado ----------
     private void cambiarEstado() {
         int numero = pedirNumeroTicket();
         if (numero == -1) return;
 
         NodoDoble nodo = enAtencion.buscarNroTicket(numero);
         if (nodo == null) {
-            JOptionPane.showMessageDialog(panelPrincipal, "No se encontró el ticket #" + numero);
+            JOptionPane.showMessageDialog(panelPrincipal, "No se encontró el ticket #" + numero + " en atención.");
             return;
         }
 
-        String[] estados = {"En atención", "En proceso", "Esperando respuesta del cliente", "Resuelto"};
-        String nuevoEstado = (String) JOptionPane.showInputDialog(
-                panelPrincipal, "Nuevo estado:", "Cambiar estado",
-                JOptionPane.QUESTION_MESSAGE, null, estados, estados[0]);
-        if (nuevoEstado == null) return;
+        Ticket ticket = nodo.getTicket();
+        boolean avanzo = ticket.avanzarEstado();
 
-        nodo.getTicket().cambiarEstado(nuevoEstado);
-        JOptionPane.showMessageDialog(panelPrincipal, "Estado actualizado a: " + nuevoEstado);
+        if (avanzo) {
+            JOptionPane.showMessageDialog(panelPrincipal,
+                    "Estado del ticket #" + numero + " avanzó a: " + ticket.getEstadoActual());
+        } else {
+            JOptionPane.showMessageDialog(panelPrincipal,
+                    "El ticket #" + numero + " ya está en el estado final (Resuelto). No se puede avanzar más.");
+        }
     }
 
-    // ---------- 7. Mostrar historial ----------
     private void mostrarHistorial() {
         int numero = pedirNumeroTicket();
         if (numero == -1) return;
@@ -178,7 +173,6 @@ public class Home {
         mostrarEnVentana(historial, "Historial del ticket #" + numero);
     }
 
-    // ---------- 8. Deshacer último cambio ----------
     private void deshacerCambio() {
         int numero = pedirNumeroTicket();
         if (numero == -1) return;
@@ -198,7 +192,6 @@ public class Home {
         }
     }
 
-    // ---------- 9. Cerrar ticket ----------
     private void cerrarTicket() {
         int numero = pedirNumeroTicket();
         if (numero == -1) return;
@@ -211,7 +204,6 @@ public class Home {
         }
     }
 
-    // ---------- 10 y 11. Mostrar en atención ----------
     private void mostrarEnAtencionInicioAFin() {
         String texto = enAtencion.listarInicioAFinComoTexto(); // ver método nuevo abajo
         mostrarEnVentana(texto, "Tickets en atención (inicio → fin)");
@@ -222,7 +214,6 @@ public class Home {
         mostrarEnVentana(texto, "Tickets en atención (fin → inicio)");
     }
 
-    // ---------- Helpers ----------
     private int pedirNumeroTicket() {
         String input = JOptionPane.showInputDialog(panelPrincipal, "Número de ticket:");
         if (input == null || input.isBlank()) return -1;
